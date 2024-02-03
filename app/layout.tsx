@@ -3,8 +3,8 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Modal from "./components/modals/Modal";
-
-
+import RegisterModal from "./components/modals/RegisterModal";
+import ToasterProvider from "./providers/ToasterProvider";
 
 export const metadata: Metadata = {
   title: "Airbnb",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const font = Nunito({
   subsets: ["latin"],
-})
+});
 
 export default function RootLayout({
   children,
@@ -23,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Modal isOpen title="Login Modal" />
+        <ToasterProvider />
+        <RegisterModal />
         <Navbar />
+
         {children}
-        </body>
+      </body>
     </html>
   );
 }
