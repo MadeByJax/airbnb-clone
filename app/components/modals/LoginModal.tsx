@@ -9,14 +9,16 @@ import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
-import Input from "../Inputs";
+import Input from "../inputs/Inputs";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const LoginModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -28,6 +30,11 @@ const LoginModal = () => {
       password: "",
     },
   });
+
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -60,22 +67,22 @@ const LoginModal = () => {
         outline
         icon={FcGoogle}
         label="Continue with Google"
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         icon={AiFillGithub}
         label="Continue with Github"
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />{" "}
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row items-center justify-center gap-2">
-          <div>Already have an account?</div>
+          <div>Fiorst time using Airbnb?</div>
           <div
-            onClick={loginModal.onClose}
+            onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
-            Log in
+            Create an account
           </div>
         </div>
       </div>
